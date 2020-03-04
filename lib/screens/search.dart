@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapp/block/movie_bloc/movie_bloc.dart';
 import 'package:movieapp/block/movie_bloc/movie_event.dart';
 import 'package:movieapp/block/movie_bloc/movie_state.dart';
+import 'package:movieapp/block/search_block/search_bloc.dart';
+import 'package:movieapp/block/search_block/search_event.dart';
+import 'package:movieapp/block/search_block/search_state.dart';
 import 'package:movieapp/data/model/api_result_model.dart';
 import 'package:movieapp/data/repositoties/movie_repositories.dart';
 import 'package:movieapp/screens/home.dart';
@@ -17,7 +20,7 @@ class _SearchScreenState extends State<SearchScreen> {
   TextEditingController textEditingController;
   bool filter = false;
   FocusNode focusNode;
-  MovieBloc movieBloc;
+  SearchMovieBloc searchMovieBloc;
   List<Results> moviesList = [];
   @override
   void initState() {
@@ -35,30 +38,24 @@ class _SearchScreenState extends State<SearchScreen> {
         onTap: () {
           focusNode.unfocus();
         },
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            children: <Widget>[
-              searchBox(),
-              Container(
-                height: double.maxFinite,
-                child: Expanded(
-                  child: BlocBuilder<MovieBloc, MovieState>(
-                      builder: (context, state) {
-                    if (state is MovieInitialState) {
-                      return Center(child: Text("Search"));
-                    } else if (state is MovieLoadingState) {
-                      return Center(child: CircularProgressIndicator());
-                    } else if (state is MovieLoadedState) {
-                      return Home(state.movies);
-                    } else if (state is MovieErrorState) {
-                      return NetworkError();
-                    }
-                  }),
-                ),
-              )
-            ],
-          ),
+        child: Column(
+          children: <Widget>[
+            searchBox(),
+            Expanded(
+              child: BlocBuilder<SearchMovieBloc, SearchMovieState>(
+                  builder: (context, state) {
+                if (state is SearchMovieInitialState) {
+                  return Text("Search");
+                } else if (state is SearchMovieLoadingState) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (state is SearchMovieLoadedState) {
+                  return Home(state.movies);
+                } else if (state is SearchMovieErrorState) {
+                  return NetworkError();
+                }
+              }),
+            )
+          ],
         ),
       ),
     );
@@ -97,8 +94,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     textInputAction: TextInputAction.search,
                     onFieldSubmitted: (value) {
                       setState(() {
-                        movieBloc = BlocProvider.of<MovieBloc>(context);
-                        movieBloc.add(FetchMovieBySearchEvent(
+                        searchMovieBloc =
+                            BlocProvider.of<SearchMovieBloc>(context);
+                        searchMovieBloc.add(FetchMovieBySearchEvent(
                             query: textEditingController.text));
                         print("done");
                       });

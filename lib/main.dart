@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapp/block/movie_bloc/movie_bloc.dart';
 import 'package:movieapp/block/movie_bloc/movie_event.dart';
 import 'package:movieapp/block/movie_bloc/movie_state.dart';
+import 'package:movieapp/block/search_block/search_bloc.dart';
 import 'package:movieapp/data/repositoties/movie_repositories.dart';
 import 'package:movieapp/screens/home.dart';
 import 'package:movieapp/screens/network.dart';
@@ -26,8 +27,17 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-    return BlocProvider(
-      create: (context) => MovieBloc(repository: MovieRepositoryImpl()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<MovieBloc>(
+          create: (context) => MovieBloc(repository: MovieRepositoryImpl()),
+        ),
+        BlocProvider<SearchMovieBloc>(
+          create: (context) =>
+              SearchMovieBloc(repository: MovieRepositoryImpl()),
+        ),
+      ],
+      //create: (context) => MovieBloc(repository: MovieRepositoryImpl()),
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
