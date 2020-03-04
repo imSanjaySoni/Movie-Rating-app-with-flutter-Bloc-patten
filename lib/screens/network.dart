@@ -20,10 +20,10 @@ class NetworkError extends StatelessWidget {
                 fontFamily: "Poppins-Bold", fontSize: 24, color: Colors.white),
           ),
           Text(
-            "Please check your internet conection!\n",
+            "Someting went wrong !\n",
             style: TextStyle(
                 fontFamily: "Poppins-Medium", fontSize: 18, color: Colors.grey),
-          )
+          ),
         ],
       ),
     );

@@ -10,6 +10,8 @@ import 'package:movieapp/block/movie_bloc/movie_state.dart';
 import 'package:movieapp/data/repositoties/movie_repositories.dart';
 import 'package:movieapp/screens/home.dart';
 import 'package:movieapp/screens/network.dart';
+import 'package:movieapp/screens/search.dart';
+import 'package:shimmer/shimmer.dart';
 
 void main() => runApp(MyApp());
 
@@ -70,25 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  "Movies.",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 40,
-                      fontFamily: "Poppins-Bold",
-                      fontWeight: FontWeight.w700),
-                ),
-                IconButton(
-                  icon: Icon(Icons.search),
-                  color: Colors.white,
-                  iconSize: 40,
-                  onPressed: () {},
-                )
-              ],
-            ),
+            appBar(),
             tabBar(),
             SizedBox(
               height: 10,
@@ -111,6 +95,33 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget appBar() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Text(
+          "Movies.",
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 40,
+              fontFamily: "Poppins-Bold",
+              fontWeight: FontWeight.w700),
+        ),
+        IconButton(
+          icon: Icon(Icons.search),
+          color: Colors.white,
+          iconSize: 40,
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (BuildContext context) {
+              return SearchScreen();
+            }));
+          },
+        )
+      ],
     );
   }
 
@@ -164,7 +175,47 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 Widget loading() {
-  return Center(
-    child: CircularProgressIndicator(),
-  );
+  int offset = 0;
+  int time;
+  return ListView.builder(
+      itemCount: 4,
+      itemBuilder: (BuildContext context, int index) {
+        offset += 10;
+        time = 800 + offset;
+        return Shimmer.fromColors(
+          period: Duration(milliseconds: time),
+          highlightColor: Color(0xFF1a1c20),
+          baseColor: Color(0xFF111111),
+          child: Container(
+            margin: EdgeInsets.all(4.0),
+            height: 165,
+            child: Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Positioned(
+                  child: Container(
+                    height: 135,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                        color: Color(0xFF333333),
+                        borderRadius: BorderRadius.circular(12)),
+                  ),
+                ),
+                Positioned(
+                  left: 16,
+                  top: 0,
+                  height: 165,
+                  child: Container(
+                    width: 145,
+                    alignment: Alignment.centerRight,
+                    decoration: BoxDecoration(
+                        color: Color(0xFF333333),
+                        borderRadius: BorderRadius.circular(12)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      });
 }

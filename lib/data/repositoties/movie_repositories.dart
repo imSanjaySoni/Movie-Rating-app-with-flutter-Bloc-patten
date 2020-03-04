@@ -7,11 +7,26 @@ abstract class MovieRepository {
 }
 
 class MovieRepositoryImpl implements MovieRepository {
-  var url =
-      "http://api.themoviedb.org/3/movie/upcoming?api_key=f9e592bb82b33db7094aeffd4f9647b8";
+  var baseUrl = "http://api.themoviedb.org/3/";
+  var key = "f9e592bb82b33db7094aeffd4f9647b8";
+
   @override
   Future<List<Results>> getMovies() async {
-    var response = await http.get(url);
+    var response = await http.get(baseUrl + "movie/upcoming?api_key=$key");
+
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+
+      List<Results> movies = ApiResultModel.fromJson(data).results;
+      return movies;
+    } else {
+      throw Exception();
+    }
+  }
+
+  Future<List<Results>> getMoviesBySearch(String query) async {
+    var response =
+        await http.get(baseUrl + "search/movie?api_key=$key&query=$query");
 
     if (response.statusCode == 200) {
       var data = json.decode(response.body);

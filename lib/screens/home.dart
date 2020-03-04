@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movieapp/data/model/api_result_model.dart';
 import 'package:movieapp/screens/details.dart';
@@ -93,11 +94,16 @@ class Home extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       decoration: BoxDecoration(
                           color: Color(0xFF333333),
-                          image: DecorationImage(
-                              image: NetworkImage(
-                                  "https://image.tmdb.org/t/p/w1280${movies[index].posterPath}"),
-                              fit: BoxFit.fill),
-                          borderRadius: BorderRadius.circular(12)),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: CachedNetworkImage(
+                          width: 145,
+                          imageUrl:
+                              "https://image.tmdb.org/t/p/w1280${movies[index].posterPath}",
+                          fit: BoxFit.fill,
+                        ),
+                      ),
                     ),
                   ),
                 ),
