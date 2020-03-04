@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:movieapp/data/model/api_result_model.dart';
+import 'package:movieapp/data/model/genre.dart';
 
 class Details extends StatelessWidget {
   Results movies;
@@ -8,6 +10,7 @@ class Details extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //print("geners:${}");
     return Scaffold(
       backgroundColor: Colors.black,
       body: Column(
@@ -16,14 +19,22 @@ class Details extends StatelessWidget {
           Stack(
             alignment: Alignment.bottomLeft,
             children: <Widget>[
-              Container(
-                height: MediaQuery.of(context).size.height * 0.57,
-                color: Color(0xFF333333),
-                child: CachedNetworkImage(
-                  imageUrl:
-                      "https://image.tmdb.org/t/p/w1280${movies.posterPath}",
-                  fit: BoxFit.cover,
-                  width: double.infinity,
+              Hero(
+                tag: "https://image.tmdb.org/t/p/w1280${movies.id}",
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.57,
+                  color: Color(0xFF333333),
+                  child: kIsWeb
+                      ? Image.network(
+                          "https://image.tmdb.org/t/p/w1280${movies.posterPath}",
+                          width: double.infinity,
+                          fit: BoxFit.cover)
+                      : CachedNetworkImage(
+                          width: double.infinity,
+                          imageUrl:
+                              "https://image.tmdb.org/t/p/w1280${movies.posterPath}",
+                          fit: BoxFit.fill,
+                        ),
                 ),
               ),
               Container(
@@ -49,6 +60,7 @@ class Details extends StatelessWidget {
                     Navigator.of(context).pop();
                   },
                   child: Container(
+                    margin: EdgeInsets.only(top: 16),
                     height: 45,
                     width: 45,
                     decoration: BoxDecoration(
@@ -84,25 +96,28 @@ class Details extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        geners(),
-                        Text("Overview",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: "Poppins-Medium",
-                                fontSize: 20)),
-                        SizedBox(
-                          height: 8,
+                        genres(),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10.0),
+                          child: Text("Overview",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: "Poppins-Medium",
+                                  fontSize: 20)),
                         ),
                         Text(movies.overview,
                             style: TextStyle(
-                                color: Colors.white.withOpacity(.7),
+                                color: Colors.white.withOpacity(.8),
                                 fontFamily: "Poppins-Light",
                                 fontSize: 17)),
-                        Text("Cast & Crue",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: "Poppins-Medium",
-                                fontSize: 20)),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10.0, bottom: 5),
+                          child: Text("Cast & Crue",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: "Poppins-Medium",
+                                  fontSize: 20)),
+                        ),
                         Container(
                           height: 150,
                           width: MediaQuery.of(context).size.width,
@@ -149,31 +164,34 @@ class Details extends StatelessWidget {
     );
   }
 
-  Widget geners() {
+  Widget genres() {
+    List<String> geners = [];
+
+    for (int i = 0; i < movies.genreIds.length; i++) {
+      geners.add((Genre.getGenre(movies.genreIds[i].toString())));
+    }
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Wrap(
-        runSpacing: 2,
-        spacing: 8,
-        children: <Widget>[
-          Container(
-            height: 40,
-            decoration: BoxDecoration(
-                color: Colors.red, borderRadius: BorderRadius.circular(20)),
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-              child: Text(
-                "Horror",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: "Poppins-Light",
-                    fontSize: 16),
-              ),
-            ),
-          )
-        ],
-      ),
+      child: getTextWidgets(geners),
     );
   }
+}
+
+Widget getTextWidgets(List<String> strings) {
+  List<Widget> list = new List<Widget>();
+  for (var i = 0; i < strings.length; i++) {
+    list.add(Container(
+      decoration: BoxDecoration(
+          color: Colors.redAccent, borderRadius: BorderRadius.circular(5)),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 13),
+        child: new Text(
+          strings[i],
+          style: TextStyle(color: Colors.white, fontFamily: "Poppins-Light"),
+        ),
+      ),
+    ));
+  }
+  return new Wrap(runSpacing: 8, spacing: 8, children: list);
 }

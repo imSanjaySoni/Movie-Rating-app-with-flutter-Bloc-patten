@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:movieapp/data/model/api_result_model.dart';
 import 'package:movieapp/screens/details.dart';
@@ -49,6 +50,7 @@ class Home extends StatelessWidget {
                               children: <Widget>[
                                 Text(
                                   movies[index].title.toUpperCase(),
+                                  overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: "Poppins-Medium",
@@ -89,19 +91,28 @@ class Home extends StatelessWidget {
                           builder: (BuildContext context) =>
                               Details(movies[index])));
                     },
-                    child: Container(
-                      width: 145,
-                      alignment: Alignment.centerRight,
-                      decoration: BoxDecoration(
-                          color: Color(0xFF333333),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: CachedNetworkImage(
-                          width: 145,
-                          imageUrl:
-                              "https://image.tmdb.org/t/p/w1280${movies[index].posterPath}",
-                          fit: BoxFit.fill,
+                    child: Hero(
+                      tag:
+                          "https://image.tmdb.org/t/p/w1280${movies[index].id}",
+                      child: Container(
+                        width: 145,
+                        alignment: Alignment.centerRight,
+                        decoration: BoxDecoration(
+                            color: Color(0xFF333333),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: kIsWeb
+                              ? Image.network(
+                                  "https://image.tmdb.org/t/p/w1280${movies[index].posterPath}",
+                                  width: 145,
+                                  fit: BoxFit.cover)
+                              : CachedNetworkImage(
+                                  width: 145,
+                                  imageUrl:
+                                      "https://image.tmdb.org/t/p/w1280${movies[index].posterPath}",
+                                  fit: BoxFit.fill,
+                                ),
                         ),
                       ),
                     ),

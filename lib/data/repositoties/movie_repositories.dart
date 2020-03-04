@@ -4,6 +4,7 @@ import 'dart:convert';
 
 abstract class MovieRepository {
   Future<List<Results>> getMovies();
+  Future<List<Results>> getMoviesBySearch(String query);
 }
 
 class MovieRepositoryImpl implements MovieRepository {

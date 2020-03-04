@@ -26,24 +26,20 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.red,
-        ),
-        home: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle(
-              statusBarColor: Colors.transparent,
-              statusBarIconBrightness: Brightness.light),
-          child: Scaffold(
-              backgroundColor: Colors.black,
-              body: BlocProvider(
-                  create: (context) =>
-                      MovieBloc(repository: MovieRepositoryImpl()),
-                  builder: (context) =>
-                      MovieBloc(repository: MovieRepositoryImpl()),
-                  child: MyHomePage())),
-        ));
+    return BlocProvider(
+      create: (context) => MovieBloc(repository: MovieRepositoryImpl()),
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: Colors.red,
+          ),
+          home: AnnotatedRegion<SystemUiOverlayStyle>(
+            value: SystemUiOverlayStyle(
+                statusBarColor: Colors.transparent,
+                statusBarIconBrightness: Brightness.light),
+            child: Scaffold(backgroundColor: Colors.black, body: MyHomePage()),
+          )),
+    );
   }
 }
 
@@ -85,7 +81,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 } else if (state is MovieLoadingState) {
                   return loading();
                 } else if (state is MovieLoadedState) {
-                  print(state.moviesList);
                   return Home(state.movies);
                 } else if (state is MovieErrorState) {
                   return NetworkError();

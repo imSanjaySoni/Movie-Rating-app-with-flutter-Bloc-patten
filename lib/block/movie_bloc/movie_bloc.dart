@@ -26,6 +26,14 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
       } catch (e) {
         yield MovieErrorState(message: e.toString());
       }
+    } else if (event is FetchMovieBySearchEvent) {
+      yield MovieLoadingState();
+      try {
+        List<Results> movies = await repository.getMoviesBySearch(event.query);
+        yield MovieLoadedState(movies: movies);
+      } catch (e) {
+        yield MovieErrorState(message: e.toString());
+      }
     }
   }
 }
