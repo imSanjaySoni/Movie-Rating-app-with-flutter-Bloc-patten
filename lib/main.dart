@@ -4,6 +4,7 @@ import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movieapp/block/cast_and_crew_bloc/cast_bloc.dart';
 import 'package:movieapp/block/movie_bloc/movie_bloc.dart';
 import 'package:movieapp/block/movie_bloc/movie_event.dart';
 import 'package:movieapp/block/movie_bloc/movie_state.dart';
@@ -36,6 +37,9 @@ class _MyAppState extends State<MyApp> {
           create: (context) =>
               SearchMovieBloc(repository: MovieRepositoryImpl()),
         ),
+        BlocProvider<CastBloc>(
+          create: (context) => CastBloc(repository: MovieRepositoryImpl()),
+        ),
       ],
       //create: (context) => MovieBloc(repository: MovieRepositoryImpl()),
       child: MaterialApp(
@@ -67,7 +71,8 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     movieBloc = BlocProvider.of<MovieBloc>(context);
-    movieBloc.add(FetchMovieEvent());
+    movieBloc.add(FetchMovieEvent(movieType: "now_playing"));
+    //movieBloc.add(FetchMovieEvent());
   }
 
   @override
@@ -136,20 +141,20 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          tab(0, "In Threaters"),
-          tab(1, "Upcomings"),
-          tab(2, "Populers"),
+          tab(0, "In Threaters", "now_playing"),
+          tab(1, "Upcomings", "upcoming"),
+          tab(2, "Popular", "popular"),
         ],
       ),
     );
   }
 
-  Widget tab(int index, String title) {
+  Widget tab(int index, String title, String movieType) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 16),
       child: InkWell(
         onTap: () {
-          movieBloc.add(FetchMovieEvent());
+          movieBloc.add(FetchMovieEvent(movieType: movieType));
           setState(() {
             activeIndex = index;
           });

@@ -33,6 +33,7 @@ dependencies:
   data_connection_checker: ^0.3.4
   shimmer: ^1.0.1
   cached_network_image: ^2.0.0
+  auto_size_text: ^2.1.0
 
 dev_dependencies:
   flutter_test:

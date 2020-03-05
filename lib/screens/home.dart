@@ -1,6 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movieapp/block/cast_and_crew_bloc/cast_bloc.dart';
+import 'package:movieapp/block/cast_and_crew_bloc/cast_event.dart';
 import 'package:movieapp/data/model/api_result_model.dart';
 import 'package:movieapp/screens/details.dart';
 

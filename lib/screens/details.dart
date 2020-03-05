@@ -1,12 +1,34 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movieapp/block/cast_and_crew_bloc/cast_bloc.dart';
+import 'package:movieapp/block/cast_and_crew_bloc/cast_event.dart';
+import 'package:movieapp/block/cast_and_crew_bloc/cast_state.dart';
+import 'package:movieapp/data/model/api_cast_model.dart';
 import 'package:movieapp/data/model/api_result_model.dart';
 import 'package:movieapp/data/model/genre.dart';
+import 'package:movieapp/screens/error.dart';
+import 'package:movieapp/screens/network.dart';
 
-class Details extends StatelessWidget {
+class Details extends StatefulWidget {
   Results movies;
+
   Details(this.movies);
+
+  @override
+  _DetailsState createState() => _DetailsState();
+}
+
+class _DetailsState extends State<Details> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    BlocProvider.of<CastBloc>(context)
+        .add(FetchCastAndCrewEvent(movieId: (widget.movies.id).toString()));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,19 +42,19 @@ class Details extends StatelessWidget {
             alignment: Alignment.bottomLeft,
             children: <Widget>[
               Hero(
-                tag: "https://image.tmdb.org/t/p/w1280${movies.id}",
+                tag: "https://image.tmdb.org/t/p/w1280${widget.movies.id}",
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.57,
                   color: Color(0xFF333333),
                   child: kIsWeb
                       ? Image.network(
-                          "https://image.tmdb.org/t/p/w1280${movies.posterPath}",
+                          "https://image.tmdb.org/t/p/w1280${widget.movies.posterPath}",
                           width: double.infinity,
                           fit: BoxFit.cover)
                       : CachedNetworkImage(
                           width: double.infinity,
                           imageUrl:
-                              "https://image.tmdb.org/t/p/w1280${movies.posterPath}",
+                              "https://image.tmdb.org/t/p/w1280${widget.movies.posterPath}",
                           fit: BoxFit.fill,
                         ),
                 ),
@@ -76,7 +98,7 @@ class Details extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
-                  movies.title.toUpperCase(),
+                  widget.movies.title.toUpperCase(),
                   style: TextStyle(
                       fontSize: 30,
                       fontFamily: "Poppins-Bold",
@@ -105,7 +127,7 @@ class Details extends StatelessWidget {
                                   fontFamily: "Poppins-Medium",
                                   fontSize: 20)),
                         ),
-                        Text(movies.overview,
+                        Text(widget.movies.overview,
                             style: TextStyle(
                                 color: Colors.white.withOpacity(.8),
                                 fontFamily: "Poppins-Light",
@@ -119,38 +141,25 @@ class Details extends StatelessWidget {
                                   fontSize: 20)),
                         ),
                         Container(
-                          height: 150,
+                          height: 130,
                           width: MediaQuery.of(context).size.width,
                           child: SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
-                              child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: 4,
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, i) {
-                                    return Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 6.0),
-                                          child: Container(
-                                            height: 90,
-                                            width: 70,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                image: DecorationImage(
-                                                    image: NetworkImage(
-                                                        "https://image.tmdb.org/t/p/w1280${movies.posterPath}"),
-                                                    fit: BoxFit.cover),
-                                                color: Colors.grey),
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                  })),
+                              child: BlocBuilder<CastBloc, CastState>(
+                                  builder: (context, state) {
+                                if (state is CastInitialState) {
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                } else if (state is CastLoadingState) {
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                } else if (state is CastLoadedState) {
+                                  print(state.casts);
+                                  return CastScreen(state.casts);
+                                } else if (state is CastErrorState) {
+                                  return ErrorScreen(widget.movies);
+                                }
+                              })),
                         )
                       ],
                     ),
@@ -167,8 +176,8 @@ class Details extends StatelessWidget {
   Widget genres() {
     List<String> geners = [];
 
-    for (int i = 0; i < movies.genreIds.length; i++) {
-      geners.add((Genre.getGenre(movies.genreIds[i].toString())));
+    for (int i = 0; i < widget.movies.genreIds.length; i++) {
+      geners.add((Genre.getGenre(widget.movies.genreIds[i].toString())));
     }
 
     return Padding(
@@ -194,4 +203,58 @@ Widget getTextWidgets(List<String> strings) {
     ));
   }
   return new Wrap(runSpacing: 8, spacing: 8, children: list);
+}
+
+class CastScreen extends StatelessWidget {
+  final List<Cast> casts;
+  CastScreen(this.casts);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+        separatorBuilder: (context, i) {
+          return SizedBox(
+            width: 8,
+          );
+        },
+        scrollDirection: Axis.horizontal,
+        itemCount: casts.length,
+        shrinkWrap: true,
+        itemBuilder: (context, i) {
+          debugPrint(casts[i].name);
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                child: Container(
+                  height: 95,
+                  width: 80,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                          image: casts[i].profilePath != null
+                              ? NetworkImage(
+                                  "https://image.tmdb.org/t/p/w1280${casts[i].profilePath}")
+                              : AssetImage("assets/icons/noimage.jpg"),
+                          fit: BoxFit.cover),
+                      color: Colors.grey),
+                ),
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              AutoSizeText(
+                casts[i].name,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    fontSize: 13,
+                    color: Color(0xFFfbfbfb),
+                    fontFamily: "Poppins-Light"),
+              )
+            ],
+          );
+        });
+  }
 }
