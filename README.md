@@ -2,7 +2,7 @@
 ## Movie Rating app with flutter Bloc patten
 
 ### Instruction
-Replace the api_key field with your Key,for key visit [themoviedb.org](https://hemoviedb.org).
+Replace the api_key field with your Key, for key visit [themoviedb.org](https://hemoviedb.org).
 
 ```dart
     final String api_key = "YOUR_KEY";
@@ -11,6 +11,9 @@ Replace the api_key field with your Key,for key visit [themoviedb.org](https://h
 ## Screenshots
 <table style={border:"none"}><tr><td><img src="./screenshots/0.png" alt="Home Screen(default)"/></td><td><img src="./screenshots/1.png" alt="Home Screen(Location Popup)"/></td><td><img src="./screenshots/2.png" alt="Home Screen(Location Popup)"/></td><td><img src="./screenshots/3.png" alt="Home Screen(Location Popup)"/></td><td><img src="./screenshots/5.png" alt="Home Screen(Location Popup)"/></td><td><img src="./screenshots/4.png" alt="Home Screen(Location Popup)"/></td></tr></table>
 
+### Other Apps
+[BMI Calculator](https://github.com/imSanjaySoni/BMI-Calculator-with-flutter) 
 
- [Linkedin](https://linkedin.com/in/imsanjaysoni)
- [Instagram ](https://instagram.com/imsanjaysoni)
+### follow me.
+ - [Linkedin](https://linkedin.com/in/imsanjaysoni)
+ - [Instagram ](https://instagram.com/imsanjaysoni)
