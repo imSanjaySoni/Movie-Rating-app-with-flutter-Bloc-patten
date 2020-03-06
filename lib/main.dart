@@ -1,18 +1,78 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movieapp/block/cast_and_crew_bloc/cast_bloc.dart';
-import 'package:movieapp/block/movie_bloc/movie_bloc.dart';
-import 'package:movieapp/block/movie_bloc/movie_event.dart';
-import 'package:movieapp/block/movie_bloc/movie_state.dart';
-import 'package:movieapp/block/search_block/search_bloc.dart';
-import 'package:movieapp/data/repositoties/movie_repositories.dart';
-import 'package:movieapp/screens/home.dart';
-import 'package:movieapp/screens/network.dart';
-import 'package:movieapp/screens/search.dart';
+import 'package:MOVIES/block/cast_and_crew_bloc/cast_bloc.dart';
+import 'package:MOVIES/block/movie_bloc/movie_bloc.dart';
+import 'package:MOVIES/block/movie_bloc/movie_event.dart';
+import 'package:MOVIES/block/movie_bloc/movie_state.dart';
+import 'package:MOVIES/block/search_block/search_bloc.dart';
+import 'package:MOVIES/data/repositoties/movie_repositories.dart';
+import 'package:MOVIES/screens/home.dart';
+import 'package:MOVIES/screens/network.dart';
+import 'package:MOVIES/screens/search.dart';
 import 'package:shimmer/shimmer.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(SplashHandler());
+
+class SplashHandler extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "MOVIES.",
+      debugShowCheckedModeBanner: false,
+      home: SplashScreen(),
+    );
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(Duration(seconds: 3), () async {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => MyApp()));
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "Movies",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 50,
+                  fontFamily: "Poppins-Bold",
+                  fontWeight: FontWeight.w600),
+            ),
+            Text(
+              ".",
+              style: TextStyle(
+                color: Colors.redAccent,
+                fontSize: 50,
+                fontFamily: "Poppins-Bold",
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class MyApp extends StatefulWidget {
   @override
@@ -117,7 +177,7 @@ class _MyHomePageState extends State<MyHomePage> {
               "Movies",
               style: TextStyle(
                   color: Colors.white,
-                  fontSize: width * 0.07,
+                  fontSize: width * 0.08,
                   fontFamily: "Poppins-Bold",
                   fontWeight: FontWeight.w600),
             ),
@@ -125,7 +185,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ".",
               style: TextStyle(
                 color: Colors.redAccent,
-                fontSize: width * 0.07,
+                fontSize: width * 0.08,
                 fontFamily: "Poppins-Bold",
               ),
             ),
@@ -134,7 +194,7 @@ class _MyHomePageState extends State<MyHomePage> {
         IconButton(
           icon: Icon(Icons.search),
           color: Colors.white,
-          iconSize: width * 0.07,
+          iconSize: width * 0.08,
           onPressed: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (BuildContext context) {

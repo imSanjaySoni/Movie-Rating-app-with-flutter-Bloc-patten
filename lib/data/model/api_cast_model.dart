@@ -1,7 +1,7 @@
 class CastAndCrew {
   bool adult;
   String backdropPath;
-  Null belongsToCollection;
+  //Null belongsToCollection;
   int budget;
   List<Genres> genres;
   String homepage;
@@ -29,7 +29,7 @@ class CastAndCrew {
   CastAndCrew(
       {this.adult,
       this.backdropPath,
-      this.belongsToCollection,
+      // this.belongsToCollection,
       this.budget,
       this.genres,
       this.homepage,
@@ -57,7 +57,7 @@ class CastAndCrew {
   CastAndCrew.fromJson(Map<String, dynamic> json) {
     adult = json['adult'];
     backdropPath = json['backdrop_path'];
-    belongsToCollection = json['belongs_to_collection'];
+    //belongsToCollection = json['belongs_to_collection'];
     budget = json['budget'];
     if (json['genres'] != null) {
       genres = new List<Genres>();
@@ -108,7 +108,7 @@ class CastAndCrew {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['adult'] = this.adult;
     data['backdrop_path'] = this.backdropPath;
-    data['belongs_to_collection'] = this.belongsToCollection;
+    //data['belongs_to_collection'] = this.belongsToCollection;
     data['budget'] = this.budget;
     if (this.genres != null) {
       data['genres'] = this.genres.map((v) => v.toJson()).toList();

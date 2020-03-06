@@ -1,10 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import 'package:movieapp/data/model/api_result_model.dart';
-import 'package:movieapp/data/model/genre.dart';
-import 'package:movieapp/screens/details.dart';
+import 'package:MOVIES/data/model/api_result_model.dart';
+import 'package:MOVIES/data/model/genre.dart';
+import 'package:MOVIES/screens/details.dart';
 
 class Home extends StatelessWidget {
   final List<Results> movies;
@@ -15,6 +14,7 @@ class Home extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
 
     return ListView.separated(
+        shrinkWrap: true,
         separatorBuilder: (context, index) => Divider(
               color: Colors.transparent,
             ),

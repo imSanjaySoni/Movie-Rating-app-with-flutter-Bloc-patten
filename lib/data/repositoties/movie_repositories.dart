@@ -1,5 +1,6 @@
-import 'package:movieapp/data/model/api_cast_model.dart';
-import 'package:movieapp/data/model/api_result_model.dart';
+import 'package:MOVIES/api_key.dart';
+import 'package:MOVIES/data/model/api_cast_model.dart';
+import 'package:MOVIES/data/model/api_result_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -14,7 +15,7 @@ abstract class MovieRepository {
 
 class MovieRepositoryImpl implements MovieRepository {
   var baseUrl = "http://api.themoviedb.org/3/";
-  var key = "f9e592bb82b33db7094aeffd4f9647b8";
+  var key = api_key;
 
   @override
   Future<List<Results>> getMovies(String movieType) async {

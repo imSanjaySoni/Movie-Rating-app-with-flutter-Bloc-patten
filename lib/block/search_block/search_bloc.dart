@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
-import 'package:movieapp/block/search_block/search_event.dart';
-import 'package:movieapp/block/search_block/search_state.dart';
-import 'package:movieapp/data/model/api_result_model.dart';
-import 'package:movieapp/data/repositoties/movie_repositories.dart';
+import 'package:MOVIES/block/search_block/search_event.dart';
+import 'package:MOVIES/block/search_block/search_state.dart';
+import 'package:MOVIES/data/model/api_result_model.dart';
+import 'package:MOVIES/data/repositoties/movie_repositories.dart';
 
 class SearchMovieBloc extends Bloc<SearchEvent, SearchMovieState> {
   MovieRepository repository;

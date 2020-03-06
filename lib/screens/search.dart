@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movieapp/block/search_block/search_bloc.dart';
-import 'package:movieapp/block/search_block/search_event.dart';
-import 'package:movieapp/block/search_block/search_state.dart';
-import 'package:movieapp/data/model/api_result_model.dart';
-import 'package:movieapp/screens/home.dart';
-import 'package:movieapp/screens/network.dart';
+import 'package:MOVIES/block/search_block/search_bloc.dart';
+import 'package:MOVIES/block/search_block/search_event.dart';
+import 'package:MOVIES/block/search_block/search_state.dart';
+import 'package:MOVIES/data/model/api_result_model.dart';
+import 'package:MOVIES/screens/home.dart';
+import 'package:MOVIES/screens/network.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -28,6 +28,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      bottom: false,
       child: Scaffold(
         backgroundColor: Colors.black,
         body: InkWell(
@@ -39,21 +40,24 @@ class _SearchScreenState extends State<SearchScreen> {
             children: <Widget>[
               searchBox(),
               Expanded(
-                child: BlocBuilder<SearchMovieBloc, SearchMovieState>(
-                    builder: (context, state) {
-                  if (state is SearchMovieInitialState) {
-                    return Text("Search");
-                  } else if (state is SearchMovieLoadingState) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (state is SearchMovieLoadedState) {
-                    if (state.movies.length == 0) {
-                      return Center(child: Message("Nothing Found ! \n"));
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: BlocBuilder<SearchMovieBloc, SearchMovieState>(
+                      builder: (context, state) {
+                    if (state is SearchMovieInitialState) {
+                      return Container();
+                    } else if (state is SearchMovieLoadingState) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (state is SearchMovieLoadedState) {
+                      if (state.movies.length == 0) {
+                        return Center(child: Message("Nothing Found ! \n"));
+                      }
+                      return Home(state.movies);
+                    } else if (state is SearchMovieErrorState) {
+                      return NetworkError();
                     }
-                    return Home(state.movies);
-                  } else if (state is SearchMovieErrorState) {
-                    return NetworkError();
-                  }
-                }),
+                  }),
+                ),
               )
             ],
           ),
@@ -72,7 +76,7 @@ class _SearchScreenState extends State<SearchScreen> {
             IconButton(
               icon: Icon(
                 Icons.arrow_back,
-                size: MediaQuery.of(context).size.width * 0.07,
+                size: MediaQuery.of(context).size.width * 0.08,
                 color: Colors.white,
               ),
               onPressed: () {

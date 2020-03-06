@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:movieapp/data/model/api_result_model.dart';
+import 'package:MOVIES/data/model/api_result_model.dart';
 
 abstract class SearchMovieState extends Equatable {}
 

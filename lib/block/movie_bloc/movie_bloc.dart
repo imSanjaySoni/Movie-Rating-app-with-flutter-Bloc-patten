@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
-import 'package:movieapp/block/movie_bloc/movie_state.dart';
-import 'package:movieapp/block/movie_bloc/movie_event.dart';
-import 'package:movieapp/data/model/api_result_model.dart';
-import 'package:movieapp/data/repositoties/movie_repositories.dart';
+import 'package:MOVIES/block/movie_bloc/movie_state.dart';
+import 'package:MOVIES/block/movie_bloc/movie_event.dart';
+import 'package:MOVIES/data/model/api_result_model.dart';
+import 'package:MOVIES/data/repositoties/movie_repositories.dart';
 
 class MovieBloc extends Bloc<MovieEvent, MovieState> {
   MovieRepository repository;

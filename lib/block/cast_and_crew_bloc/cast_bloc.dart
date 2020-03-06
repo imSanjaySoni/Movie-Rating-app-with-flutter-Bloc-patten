@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
-import 'package:movieapp/block/cast_and_crew_bloc/cast_event.dart';
-import 'package:movieapp/block/cast_and_crew_bloc/cast_state.dart';
-import 'package:movieapp/data/model/api_cast_model.dart';
-import 'package:movieapp/data/repositoties/movie_repositories.dart';
+import 'package:MOVIES/block/cast_and_crew_bloc/cast_event.dart';
+import 'package:MOVIES/block/cast_and_crew_bloc/cast_state.dart';
+import 'package:MOVIES/data/model/api_cast_model.dart';
+import 'package:MOVIES/data/repositoties/movie_repositories.dart';
 
 class CastBloc extends Bloc<CastEvent, CastState> {
   MovieRepository repository;

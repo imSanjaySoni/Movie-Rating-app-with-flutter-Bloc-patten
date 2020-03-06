@@ -3,13 +3,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movieapp/block/cast_and_crew_bloc/cast_bloc.dart';
-import 'package:movieapp/block/cast_and_crew_bloc/cast_event.dart';
-import 'package:movieapp/block/cast_and_crew_bloc/cast_state.dart';
-import 'package:movieapp/data/model/api_cast_model.dart';
-import 'package:movieapp/data/model/api_result_model.dart';
-import 'package:movieapp/data/model/genre.dart';
-import 'package:movieapp/screens/search.dart';
+import 'package:MOVIES/block/cast_and_crew_bloc/cast_bloc.dart';
+import 'package:MOVIES/block/cast_and_crew_bloc/cast_event.dart';
+import 'package:MOVIES/block/cast_and_crew_bloc/cast_state.dart';
+import 'package:MOVIES/block/cast_and_crew_bloc/cast_state.dart';
+import 'package:MOVIES/data/model/api_cast_model.dart';
+import 'package:MOVIES/data/model/api_result_model.dart';
+import 'package:MOVIES/data/model/genre.dart';
+import 'package:MOVIES/screens/search.dart';
 
 class Details extends StatefulWidget {
   final Results movies;
@@ -144,7 +145,8 @@ class _DetailsState extends State<Details> {
                                       0.05)),
                         ),
                         Container(
-                          height: 130,
+                          alignment: Alignment.center,
+                          height: 120,
                           width: MediaQuery.of(context).size.width,
                           child: SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
@@ -226,7 +228,6 @@ class CastScreen extends StatelessWidget {
         itemCount: casts.length,
         shrinkWrap: true,
         itemBuilder: (context, i) {
-          debugPrint(casts[i].name);
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -240,7 +241,8 @@ class CastScreen extends StatelessWidget {
                       image: DecorationImage(
                           image: casts[i].profilePath != null
                               ? NetworkImage(
-                                  "https://image.tmdb.org/t/p/w1280${casts[i].profilePath}")
+                                  "https://image.tmdb.org/t/p/w1280${casts[i].profilePath}",
+                                )
                               : AssetImage("assets/icons/noimage.jpg"),
                           fit: BoxFit.cover),
                       color: Colors.grey),
