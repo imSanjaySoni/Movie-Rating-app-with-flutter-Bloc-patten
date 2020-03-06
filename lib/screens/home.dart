@@ -1,14 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movieapp/block/cast_and_crew_bloc/cast_bloc.dart';
-import 'package:movieapp/block/cast_and_crew_bloc/cast_event.dart';
+
 import 'package:movieapp/data/model/api_result_model.dart';
+import 'package:movieapp/data/model/genre.dart';
 import 'package:movieapp/screens/details.dart';
 
 class Home extends StatelessWidget {
-  List<Results> movies;
+  final List<Results> movies;
   Home(this.movies);
 
   @override
@@ -19,6 +18,12 @@ class Home extends StatelessWidget {
             ),
         itemCount: movies.length,
         itemBuilder: (BuildContext context, int index) {
+          final List<String> geners = [];
+
+          for (int i = 0; i < movies[index].genreIds.length; i++) {
+            geners.add((Genre.getGenre(movies[index].genreIds[i].toString())));
+          }
+
           return Container(
             margin: EdgeInsets.all(4.0),
             height: 165,
@@ -60,21 +65,36 @@ class Home extends StatelessWidget {
                                       fontWeight: FontWeight.w200,
                                       fontSize: 17),
                                 ),
-                                Text(
-                                  movies[index].releaseDate,
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.w200,
-                                      fontFamily: "Poppins-Light",
-                                      fontSize: 14),
-                                ),
-                                Text(
-                                  "⭐️${movies[index].voteCount}",
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.w200,
-                                      fontFamily: "Poppins-Semibold",
-                                      fontSize: 14),
+                                getTextWidgets(geners),
+                                Row(
+                                  children: <Widget>[
+                                    Text(
+                                      "⭐ ${movies[index].voteCount}",
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.w200,
+                                          fontFamily: "Poppins-Semibold",
+                                          fontSize: 14),
+                                    ),
+                                    SizedBox(
+                                      child: Text(
+                                        "  |  ",
+                                        style: TextStyle(
+                                            color: Colors.white24,
+                                            fontWeight: FontWeight.w100,
+                                            fontFamily: "Poppins-Light",
+                                            fontSize: 12),
+                                      ),
+                                    ),
+                                    Text(
+                                      " ${movies[index].releaseDate}",
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.w200,
+                                          fontFamily: "Poppins-Light",
+                                          fontSize: 14),
+                                    ),
+                                  ],
                                 )
                               ],
                             ),
@@ -126,4 +146,15 @@ class Home extends StatelessWidget {
           );
         });
   }
+}
+
+Widget getTextWidgets(List<String> strings) {
+  List<Widget> list = new List<Widget>();
+  for (var i = 0; i < strings.length; i++) {
+    list.add(new Text(
+      strings[i],
+      style: TextStyle(color: Colors.white60, fontFamily: "Poppins-Light"),
+    ));
+  }
+  return new Wrap(runSpacing: 2, spacing: 4, children: list);
 }

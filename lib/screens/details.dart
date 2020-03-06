@@ -10,10 +10,9 @@ import 'package:movieapp/data/model/api_cast_model.dart';
 import 'package:movieapp/data/model/api_result_model.dart';
 import 'package:movieapp/data/model/genre.dart';
 import 'package:movieapp/screens/error.dart';
-import 'package:movieapp/screens/network.dart';
 
 class Details extends StatefulWidget {
-  Results movies;
+  final Results movies;
 
   Details(this.movies);
 
@@ -22,9 +21,10 @@ class Details extends StatefulWidget {
 }
 
 class _DetailsState extends State<Details> {
+  List<String> geners = [];
+
   @override
   void initState() {
-    // TODO: implement initState
     BlocProvider.of<CastBloc>(context)
         .add(FetchCastAndCrewEvent(movieId: (widget.movies.id).toString()));
     super.initState();
@@ -174,8 +174,6 @@ class _DetailsState extends State<Details> {
   }
 
   Widget genres() {
-    List<String> geners = [];
-
     for (int i = 0; i < widget.movies.genreIds.length; i++) {
       geners.add((Genre.getGenre(widget.movies.genreIds[i].toString())));
     }

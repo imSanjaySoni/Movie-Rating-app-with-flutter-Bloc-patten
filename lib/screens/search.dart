@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movieapp/block/movie_bloc/movie_bloc.dart';
-import 'package:movieapp/block/movie_bloc/movie_event.dart';
-import 'package:movieapp/block/movie_bloc/movie_state.dart';
+
 import 'package:movieapp/block/search_block/search_bloc.dart';
 import 'package:movieapp/block/search_block/search_event.dart';
 import 'package:movieapp/block/search_block/search_state.dart';
 import 'package:movieapp/data/model/api_result_model.dart';
-import 'package:movieapp/data/repositoties/movie_repositories.dart';
 import 'package:movieapp/screens/home.dart';
 import 'package:movieapp/screens/network.dart';
 
