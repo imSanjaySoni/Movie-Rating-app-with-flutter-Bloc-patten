@@ -42,7 +42,7 @@ class Results {
   String originalTitle;
   List<int> genreIds;
   String title;
-  // voteAverage;
+  dynamic voteAverage;
   String overview;
   String releaseDate;
 
@@ -58,7 +58,7 @@ class Results {
       this.originalTitle,
       this.genreIds,
       this.title,
-      //    this.voteAverage,
+      this.voteAverage,
       this.overview,
       this.releaseDate});
 
@@ -74,7 +74,7 @@ class Results {
     originalTitle = json['original_title'];
     genreIds = json['genre_ids'].cast<int>();
     title = json['title'];
-    //voteAverage = json['vote_average'];
+    voteAverage = json['vote_average'];
     overview = json['overview'];
     releaseDate = json['release_date'];
   }
@@ -92,7 +92,7 @@ class Results {
     data['original_title'] = this.originalTitle;
     data['genre_ids'] = this.genreIds;
     data['title'] = this.title;
-    //  data['vote_average'] = this.voteAverage;
+    data['vote_average'] = this.voteAverage;
     data['overview'] = this.overview;
     data['release_date'] = this.releaseDate;
     return data;

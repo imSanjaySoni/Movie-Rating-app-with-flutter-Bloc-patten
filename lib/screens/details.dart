@@ -9,7 +9,7 @@ import 'package:movieapp/block/cast_and_crew_bloc/cast_state.dart';
 import 'package:movieapp/data/model/api_cast_model.dart';
 import 'package:movieapp/data/model/api_result_model.dart';
 import 'package:movieapp/data/model/genre.dart';
-import 'package:movieapp/screens/error.dart';
+import 'package:movieapp/screens/search.dart';
 
 class Details extends StatefulWidget {
   final Results movies;
@@ -98,9 +98,9 @@ class _DetailsState extends State<Details> {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
-                  widget.movies.title.toUpperCase(),
+                  widget.movies.title,
                   style: TextStyle(
-                      fontSize: 30,
+                      fontSize: MediaQuery.of(context).size.width * 0.07,
                       fontFamily: "Poppins-Bold",
                       color: Color(0xFFFBFBFB) //Color(0xFF5d59d8)
                       ),
@@ -121,24 +121,27 @@ class _DetailsState extends State<Details> {
                         genres(),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10.0),
-                          child: Text("Overview",
+                          child: Text("Storyline",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontFamily: "Poppins-Medium",
-                                  fontSize: 20)),
+                                  fontSize: MediaQuery.of(context).size.width *
+                                      0.05)),
                         ),
                         Text(widget.movies.overview,
                             style: TextStyle(
                                 color: Colors.white.withOpacity(.8),
                                 fontFamily: "Poppins-Light",
-                                fontSize: 17)),
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.038)),
                         Padding(
                           padding: const EdgeInsets.only(top: 10.0, bottom: 5),
                           child: Text("Cast & Crue",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontFamily: "Poppins-Medium",
-                                  fontSize: 20)),
+                                  fontSize: MediaQuery.of(context).size.width *
+                                      0.05)),
                         ),
                         Container(
                           height: 130,
@@ -148,16 +151,15 @@ class _DetailsState extends State<Details> {
                               child: BlocBuilder<CastBloc, CastState>(
                                   builder: (context, state) {
                                 if (state is CastInitialState) {
-                                  return Center(
-                                      child: CircularProgressIndicator());
+                                  return CircularProgressIndicator();
                                 } else if (state is CastLoadingState) {
-                                  return Center(
-                                      child: CircularProgressIndicator());
+                                  return CircularProgressIndicator();
                                 } else if (state is CastLoadedState) {
                                   print(state.casts);
                                   return CastScreen(state.casts);
                                 } else if (state is CastErrorState) {
-                                  return ErrorScreen(widget.movies);
+                                  return Center(
+                                      child: Message("Feild to load !"));
                                 }
                               })),
                         )
@@ -180,22 +182,27 @@ class _DetailsState extends State<Details> {
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: getTextWidgets(geners),
+      child: getTextWidgets(context, geners),
     );
   }
 }
 
-Widget getTextWidgets(List<String> strings) {
+Widget getTextWidgets(context, List<String> strings) {
   List<Widget> list = new List<Widget>();
   for (var i = 0; i < strings.length; i++) {
     list.add(Container(
       decoration: BoxDecoration(
-          color: Colors.redAccent, borderRadius: BorderRadius.circular(5)),
+          color: Color(0xFFee6969), borderRadius: BorderRadius.circular(5)),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 13),
         child: new Text(
           strings[i],
-          style: TextStyle(color: Colors.white, fontFamily: "Poppins-Light"),
+          style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w500,
+              letterSpacing: 0.2,
+              fontSize: MediaQuery.of(context).size.width * 0.033,
+              fontFamily: "Poppins-Light"),
         ),
       ),
     ));
@@ -226,8 +233,8 @@ class CastScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 6.0),
                 child: Container(
-                  height: 95,
-                  width: 80,
+                  height: MediaQuery.of(context).size.width * 0.15 + 15,
+                  width: MediaQuery.of(context).size.width * 0.15,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       image: DecorationImage(
@@ -245,9 +252,10 @@ class CastScreen extends StatelessWidget {
               AutoSizeText(
                 casts[i].name,
                 maxLines: 2,
+                softWrap: true,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                    fontSize: 13,
+                    fontSize: MediaQuery.of(context).size.width * 0.02,
                     color: Color(0xFFfbfbfb),
                     fontFamily: "Poppins-Light"),
               )

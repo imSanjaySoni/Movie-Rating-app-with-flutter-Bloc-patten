@@ -1,6 +1,3 @@
-import 'dart:async';
-
-import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +15,6 @@ import 'package:shimmer/shimmer.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
-  // This widget is the root of your application.
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -77,13 +73,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
     return SafeArea(
+      bottom: false,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            appBar(),
+            appBar(width),
             tabBar(),
             SizedBox(
               height: 10,
@@ -108,22 +107,34 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget appBar() {
+  Widget appBar(width) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Text(
-          "Movies.",
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 40,
-              fontFamily: "Poppins-Bold",
-              fontWeight: FontWeight.w700),
+        Row(
+          children: <Widget>[
+            Text(
+              "Movies",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: width * 0.07,
+                  fontFamily: "Poppins-Bold",
+                  fontWeight: FontWeight.w600),
+            ),
+            Text(
+              ".",
+              style: TextStyle(
+                color: Colors.redAccent,
+                fontSize: width * 0.07,
+                fontFamily: "Poppins-Bold",
+              ),
+            ),
+          ],
         ),
         IconButton(
           icon: Icon(Icons.search),
           color: Colors.white,
-          iconSize: 40,
+          iconSize: width * 0.07,
           onPressed: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (BuildContext context) {
@@ -170,7 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Text(
               title,
               style: TextStyle(
-                fontSize: 14,
+                fontSize: MediaQuery.of(context).size.width * 0.035,
                 letterSpacing: 0.5,
                 fontWeight: FontWeight.w600,
                 fontFamily: "Poppins-Light",
@@ -198,13 +209,13 @@ Widget loading() {
           baseColor: Color(0xFF111111),
           child: Container(
             margin: EdgeInsets.all(4.0),
-            height: 165,
+            height: MediaQuery.of(context).size.height * 0.19,
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[
                 Positioned(
                   child: Container(
-                    height: 135,
+                    height: MediaQuery.of(context).size.height * 0.16,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                         color: Color(0xFF333333),
@@ -214,7 +225,8 @@ Widget loading() {
                 Positioned(
                   left: 16,
                   top: 0,
-                  height: 165,
+                  height: MediaQuery.of(context).size.height * 0.19,
+                  width: MediaQuery.of(context).size.height * 0.16,
                   child: Container(
                     width: 145,
                     alignment: Alignment.centerRight,

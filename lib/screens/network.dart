@@ -7,22 +7,36 @@ class NetworkError extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Container(
-            height: 160,
-            width: 160,
-            child: Image.asset(
-              "assets/icons/error.png",
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                height: 40,
+                width: 40,
+                child: Image.asset(
+                  "assets/icons/error.png",
+                ),
+              ),
+              SizedBox(
+                width: 8,
+              ),
+              Text(
+                "Oops..",
+                style: TextStyle(
+                    fontFamily: "Poppins-Bold",
+                    fontSize: 24,
+                    color: Color(0xfffbfbfbf)),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
           ),
           Text(
-            "Oops..",
+            "Someting went wrong !\n check your internet connection.",
+            textAlign: TextAlign.center,
             style: TextStyle(
-                fontFamily: "Poppins-Bold", fontSize: 24, color: Colors.white),
-          ),
-          Text(
-            "Someting went wrong !\n",
-            style: TextStyle(
-                fontFamily: "Poppins-Medium", fontSize: 18, color: Colors.grey),
+                fontFamily: "Poppins-Light", fontSize: 16, color: Colors.grey),
           ),
         ],
       ),

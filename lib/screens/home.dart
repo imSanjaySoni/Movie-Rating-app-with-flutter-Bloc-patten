@@ -12,6 +12,8 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+
     return ListView.separated(
         separatorBuilder: (context, index) => Divider(
               color: Colors.transparent,
@@ -26,13 +28,13 @@ class Home extends StatelessWidget {
 
           return Container(
             margin: EdgeInsets.all(4.0),
-            height: 165,
+            height: height * 0.19,
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[
                 Positioned(
                   child: Container(
-                    height: 135,
+                    height: height * 0.162,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                         gradient: LinearGradient(
@@ -42,11 +44,11 @@ class Home extends StatelessWidget {
                               Color(0xFF1a1c20),
                               Color(0xFF222222),
                             ]),
-                        borderRadius: BorderRadius.circular(12)),
+                        borderRadius: BorderRadius.circular(8)),
                     child: Row(
                       children: <Widget>[
                         SizedBox(
-                          width: 170,
+                          width: height * 0.162 + 16,
                         ),
                         Expanded(
                           child: Padding(
@@ -57,24 +59,29 @@ class Home extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  movies[index].title.toUpperCase(),
+                                  movies[index].title,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: "Poppins-Medium",
                                       fontWeight: FontWeight.w200,
-                                      fontSize: 17),
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.04),
                                 ),
-                                getTextWidgets(geners),
+                                getTextWidgets(context, geners),
                                 Row(
                                   children: <Widget>[
                                     Text(
-                                      "⭐ ${movies[index].voteCount}",
+                                      "⭐ ${movies[index].voteAverage}",
                                       style: TextStyle(
                                           color: Colors.grey,
                                           fontWeight: FontWeight.w200,
                                           fontFamily: "Poppins-Semibold",
-                                          fontSize: 14),
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.033),
                                     ),
                                     SizedBox(
                                       child: Text(
@@ -83,7 +90,10 @@ class Home extends StatelessWidget {
                                             color: Colors.white24,
                                             fontWeight: FontWeight.w100,
                                             fontFamily: "Poppins-Light",
-                                            fontSize: 12),
+                                            fontSize: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.03),
                                       ),
                                     ),
                                     Text(
@@ -92,7 +102,10 @@ class Home extends StatelessWidget {
                                           color: Colors.grey,
                                           fontWeight: FontWeight.w200,
                                           fontFamily: "Poppins-Light",
-                                          fontSize: 14),
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.033),
                                     ),
                                   ],
                                 )
@@ -107,7 +120,8 @@ class Home extends StatelessWidget {
                 Positioned(
                   left: 16,
                   top: 0,
-                  height: 165,
+                  height: height * 0.19,
+                  width: height * 0.16,
                   child: InkWell(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
@@ -118,7 +132,6 @@ class Home extends StatelessWidget {
                       tag:
                           "https://image.tmdb.org/t/p/w1280${movies[index].id}",
                       child: Container(
-                        width: 145,
                         alignment: Alignment.centerRight,
                         decoration: BoxDecoration(
                             color: Color(0xFF333333),
@@ -148,12 +161,15 @@ class Home extends StatelessWidget {
   }
 }
 
-Widget getTextWidgets(List<String> strings) {
+Widget getTextWidgets(context, List<String> strings) {
   List<Widget> list = new List<Widget>();
   for (var i = 0; i < strings.length; i++) {
     list.add(new Text(
       strings[i],
-      style: TextStyle(color: Colors.white60, fontFamily: "Poppins-Light"),
+      style: TextStyle(
+          color: Colors.white60,
+          fontFamily: "Poppins-Light",
+          fontSize: MediaQuery.of(context).size.width * 0.033),
     ));
   }
   return new Wrap(runSpacing: 2, spacing: 4, children: list);

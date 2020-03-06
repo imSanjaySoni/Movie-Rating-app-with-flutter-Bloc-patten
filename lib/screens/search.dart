@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:movieapp/block/search_block/search_bloc.dart';
 import 'package:movieapp/block/search_block/search_event.dart';
 import 'package:movieapp/block/search_block/search_state.dart';
@@ -28,31 +27,36 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: InkWell(
-        splashColor: Colors.transparent,
-        onTap: () {
-          focusNode.unfocus();
-        },
-        child: Column(
-          children: <Widget>[
-            searchBox(),
-            Expanded(
-              child: BlocBuilder<SearchMovieBloc, SearchMovieState>(
-                  builder: (context, state) {
-                if (state is SearchMovieInitialState) {
-                  return Text("Search");
-                } else if (state is SearchMovieLoadingState) {
-                  return Center(child: CircularProgressIndicator());
-                } else if (state is SearchMovieLoadedState) {
-                  return Home(state.movies);
-                } else if (state is SearchMovieErrorState) {
-                  return NetworkError();
-                }
-              }),
-            )
-          ],
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: InkWell(
+          splashColor: Colors.transparent,
+          onTap: () {
+            focusNode.unfocus();
+          },
+          child: Column(
+            children: <Widget>[
+              searchBox(),
+              Expanded(
+                child: BlocBuilder<SearchMovieBloc, SearchMovieState>(
+                    builder: (context, state) {
+                  if (state is SearchMovieInitialState) {
+                    return Text("Search");
+                  } else if (state is SearchMovieLoadingState) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (state is SearchMovieLoadedState) {
+                    if (state.movies.length == 0) {
+                      return Center(child: Message("Nothing Found ! \n"));
+                    }
+                    return Home(state.movies);
+                  } else if (state is SearchMovieErrorState) {
+                    return NetworkError();
+                  }
+                }),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -60,16 +64,15 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget searchBox() {
     return Container(
-      height: 130,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(8, 20, 16, 20),
+        padding: const EdgeInsets.all(8),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             IconButton(
               icon: Icon(
                 Icons.arrow_back,
-                size: 33,
+                size: MediaQuery.of(context).size.width * 0.07,
                 color: Colors.white,
               ),
               onPressed: () {
@@ -95,7 +98,6 @@ class _SearchScreenState extends State<SearchScreen> {
                             BlocProvider.of<SearchMovieBloc>(context);
                         searchMovieBloc.add(FetchMovieBySearchEvent(
                             query: textEditingController.text));
-                        print("done");
                       });
                     },
                     cursorColor: Color(0xFFdddddd),
@@ -144,6 +146,21 @@ class _SearchScreenState extends State<SearchScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class Message extends StatelessWidget {
+  final String message;
+  Message(this.message);
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      message,
+      style: TextStyle(
+          color: Color(0xFFdddddd),
+          fontSize: 18,
+          fontFamily: "Poppins-Regular"),
     );
   }
 }
