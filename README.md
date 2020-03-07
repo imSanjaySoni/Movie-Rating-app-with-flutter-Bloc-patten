@@ -2,7 +2,7 @@
 ## Movie Rating app with flutter Bloc patten
 
 ### Instruction
-Replace the api_key field with your Key, for key visit [themoviedb.org](https://hemoviedb.org).
+Replace the api_key field with your Key, for key visit [themoviedb.org](https://themoviedb.org).
 
 ```dart
     final String api_key = "YOUR_KEY";
