@@ -7,7 +7,7 @@ Replace the api_key field with your Key, for key visit [themoviedb.org](https://
 ```dart
     final String api_key = "YOUR_KEY";
 ```
-### LIVE App Demo
+### App Demo
 [Download APK file](https://drive.google.com/open?id=1Is-s5QfunIesJIQMqOz1OYqRRFoThPgO)
 
 ## Screenshots
