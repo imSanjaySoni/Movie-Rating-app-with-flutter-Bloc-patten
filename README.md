@@ -16,6 +16,8 @@ Replace the api_key field with your Key, for key visit [themoviedb.org](https://
 ### Other Apps
 [BMI Calculator](https://github.com/imSanjaySoni/BMI-Calculator-with-flutter) 
 
-### follow me.
+### Follow me.
  - [Linkedin](https://linkedin.com/in/imsanjaysoni)
  - [Instagram ](https://instagram.com/imsanjaysoni)
+ - [Facebook ](https://fb.com/imsanjaysoni)
+
