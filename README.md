@@ -17,7 +17,7 @@ Replace the api_key field with your own key, for key visit [themoviedb.org](http
 [BMI Calculator](https://github.com/imSanjaySoni/BMI-Calculator-with-flutter) 
 
 ### Follow me.
- <img src="https://image.flaticon.com/icons/svg/124/124011.svg" height="15" width="15" /> [Linkedin](https://linkedin.com/in/imsanjaysoni)
- <img src="https://image.flaticon.com/icons/svg/2111/2111463.svg" height="15" width="15" />  [Instagram ](https://instagram.com/imsanjaysoni)
- <img src="https://image.flaticon.com/icons/svg/124/124010.svg" height="15" width="15" /> [Facebook ](https://fb.com/imsanjaysoni)
+ - <img src="https://image.flaticon.com/icons/svg/124/124011.svg" height="15" width="15" /> [Linkedin](https://linkedin.com/in/imsanjaysoni)
+- <img src="https://image.flaticon.com/icons/svg/2111/2111463.svg" height="15" width="15" />  [Instagram ](https://instagram.com/imsanjaysoni)
+- <img src="https://image.flaticon.com/icons/svg/124/124010.svg" height="15" width="15" /> [Facebook ](https://fb.com/imsanjaysoni)
 
