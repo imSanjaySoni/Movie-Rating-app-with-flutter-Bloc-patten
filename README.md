@@ -15,6 +15,7 @@ Replace the api_key field with your own key, for key visit [themoviedb.org](http
 
 ### Other Apps
 [BMI Calculator](https://github.com/imSanjaySoni/BMI-Calculator-with-flutter) 
+[Music Flutter Web UI](https://github.com/imSanjaySoni/Flutter-web-Music-UI)
 
 ### Follow me.
  - <img src="https://image.flaticon.com/icons/svg/124/124011.svg" height="15" width="15" /> [Linkedin](https://linkedin.com/in/imsanjaysoni)
